@@ -41,11 +41,7 @@ public class RobotService {
             }
         }
 
-        if (output.isEmpty()) {
-            return "Robot is not on the table.";
-        }
-
-        return finalOutput(output);
+        return buildFinalOutput(output);
     }
 
     private boolean isValidCommand(String command) {
@@ -57,9 +53,11 @@ public class RobotService {
         if (matcher.matches()) {
             return handlePlaceCommand(matcher, command, output);
         }
+
         if (position != null) {
             handleMovementCommand(command, position, output);
         }
+
         return position;
     }
 
@@ -68,9 +66,7 @@ public class RobotService {
         int y = Integer.parseInt(matcher.group(2));
         String facing = matcher.group(3);
 
-
-        output.append(command)
-                .append("\n");
+        output.append(command).append("\n");
 
         return new RobotPosition()
                 .setPosX(x)
@@ -97,6 +93,29 @@ public class RobotService {
                     .append("\n");
             appendReportOutput(position, output);
         }
+        // Invalid commands are silently ignored
+    }
+
+    private void appendReportOutput(RobotPosition position, StringBuilder output) {
+        output.append("Output: ")
+                .append(position.getPosX()).append(",")
+                .append(position.getPosY()).append(",")
+                .append(position.getDirection())
+                .append("\n");
+    }
+
+    private String buildFinalOutput(StringBuilder output) {
+        log.debug("buildFinalOutput called with output: '{}'", output);
+        log.debug("output.isEmpty(): {}", output.isEmpty());
+
+        if (output.isEmpty()) {
+            log.debug("Returning: Robot is not on the table.");
+            return "Robot is not on the table.";
+        }
+
+        String result = output.toString().trim();
+        log.debug("Returning result: '{}'", result);
+        return result;
     }
 
     private void moveForward(RobotPosition position) {
@@ -114,9 +133,9 @@ public class RobotService {
             }
         }
 
+        // ignore move that would make robot fall
         if (isValidPosition(nextX, nextY)) {
-            position.setPosX(nextX)
-                    .setPosY(nextY);
+            position.setPosX(nextX).setPosY(nextY);
         }
     }
 
@@ -144,22 +163,6 @@ public class RobotService {
         } else if (WEST.equals(direction)) {
             position.setDirection(NORTH);
         }
-    }
-
-    private void appendReportOutput(RobotPosition position, StringBuilder output) {
-        output.append("Output: ")
-                .append(position.getPosX()).append(",")
-                .append(position.getPosY()).append(",")
-                .append(position.getDirection())
-                .append("\n");
-        log.info("Output: {}", output.toString());
-    }
-
-    private String finalOutput(StringBuilder output) {
-        if (output.isEmpty()) {
-            return "Robot is not on the table";
-        }
-        return output.toString().trim();
     }
 
     private boolean isValidPosition(int x, int y) {
