@@ -1,4 +1,4 @@
-package com.ssc.robot.model.dto;
+package com.vani.robot.model.dto;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

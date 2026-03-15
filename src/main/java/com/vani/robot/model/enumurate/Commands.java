@@ -1,4 +1,4 @@
-package com.ssc.robot.model.enumurate;
+package com.vani.robot.model.enumurate;
 
 import lombok.Getter;
 

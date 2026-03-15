@@ -1,7 +1,7 @@
-package com.ssc.robot.controller;
+package com.vani.robot.controller;
 
-import com.ssc.robot.model.request.RobotRequest;
-import com.ssc.robot.service.RobotService;
+import com.vani.robot.model.request.RobotRequest;
+import com.vani.robot.service.RobotService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

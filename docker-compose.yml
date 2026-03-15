@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  robot-app:
+      build: .
+      ports:
+        - "8080:8080"
+      environment:
+        - SPRING_PROFILES_ACTIVE=local
+      restart: unless-stopped

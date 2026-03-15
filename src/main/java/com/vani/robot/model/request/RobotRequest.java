@@ -1,4 +1,4 @@
-package com.ssc.robot.model.request;
+package com.vani.robot.model.request;
 
 import lombok.Data;
 
